@@ -45,8 +45,16 @@ window.onload = function() {
     pieces.forEach(piece => {
       ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
     });
+	
+	console.log("Pieces after draw", pieces);
   }
   
+  function movePuzzlePieces() {
+	  pieces.forEach(piece => {
+      ctx.translate(piece.x, piece.y);
+    });
+	
+  }
   // Function to shuffle the puzzle pieces randomly
   function shufflePieces() {
     // Logging to check if the shuffle button works
@@ -58,7 +66,7 @@ window.onload = function() {
     // Logging the new order of the pieces for debugging
     console.log("Pieces after shuffle:", pieces);
 
-    drawPuzzle();
+    movePuzzlePieces();
   }
 
   // Add event listener for the shuffle button
