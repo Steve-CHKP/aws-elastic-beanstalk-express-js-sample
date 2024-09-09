@@ -39,6 +39,14 @@ window.onload = function() {
     }
   }
 
+  // Draw the puzzle pieces on the canvas
+  function drawPuzzle() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
+    pieces.forEach(piece => {
+      ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
+    });
+  }
+  
   // Function to shuffle the puzzle pieces randomly
   function shufflePieces() {
     // Logging to check if the shuffle button works
@@ -51,14 +59,6 @@ window.onload = function() {
     console.log("Pieces after shuffle:", pieces);
 
     drawPuzzle();
-  }
-
-  // Draw the puzzle pieces on the canvas
-  function drawPuzzle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
-    pieces.forEach(piece => {
-      ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
-    });
   }
 
   // Add event listener for the shuffle button
