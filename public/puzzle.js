@@ -11,7 +11,7 @@ window.onload = function() {
   const img = new Image();
   img.src = './images/CP-blog-banner.png'; // Update with the new image path
   img.onload = function() {
-    // Set canvas size to match the image size
+    // Set canvas size to match the image size dynamically
     canvas.width = img.width;
     canvas.height = img.height;
 
@@ -39,22 +39,32 @@ window.onload = function() {
     }
   }
 
+  // Function to shuffle the puzzle pieces randomly
+  function shufflePieces() {
+    // Logging to check if the shuffle button works
+    console.log("Shuffling pieces...");
+
+    // Shuffle the pieces array
+    pieces.sort(() => Math.random() - 0.5);
+    
+    // Logging the new order of the pieces for debugging
+    console.log("Pieces after shuffle:", pieces);
+
+    drawPuzzle();
+  }
+
   // Draw the puzzle pieces on the canvas
   function drawPuzzle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
     pieces.forEach(piece => {
       ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
     });
   }
 
-  // Shuffle the puzzle pieces randomly
-  function shufflePieces() {
-    pieces.sort(() => Math.random() - 0.5);
-    drawPuzzle();
-  }
-
-  // Add shuffle button click event
-  shuffleButton.addEventListener('click', shufflePieces);
+  // Add event listener for the shuffle button
+  shuffleButton.addEventListener('click', function() {
+    shufflePieces(); // Call the shuffle function
+  });
 
   // Enable drag and drop functionality
   canvas.addEventListener('mousedown', startDragging);
