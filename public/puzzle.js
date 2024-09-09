@@ -11,7 +11,11 @@ window.onload = function() {
   const img = new Image();
   img.src = './images/CP-blog-banner.png'; // Update with the new image path
   img.onload = function() {
-    pieceWidth = canvas.width / 3;
+    // Set canvas size to match the image size
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    pieceWidth = canvas.width / 3;  // Assuming a 3x3 grid puzzle
     pieceHeight = canvas.height / 3;
 
     // Initialize pieces
@@ -55,44 +59,4 @@ window.onload = function() {
   // Enable drag and drop functionality
   canvas.addEventListener('mousedown', startDragging);
   canvas.addEventListener('mousemove', dragPiece);
-  canvas.addEventListener('mouseup', dropPiece);
-
-  function startDragging(e) {
-    const mousePos = getMousePos(canvas, e);
-    for (let i = 0; i < pieces.length; i++) {
-      const piece = pieces[i];
-      if (isInside(mousePos, piece)) {
-        draggingPiece = piece;
-        offsetX = mousePos.x - piece.x;
-        offsetY = mousePos.y - piece.y;
-        break;
-      }
-    }
-  }
-
-  function dragPiece(e) {
-    if (!draggingPiece) return;
-    const mousePos = getMousePos(canvas, e);
-    draggingPiece.x = mousePos.x - offsetX;
-    draggingPiece.y = mousePos.y - offsetY;
-    drawPuzzle();
-  }
-
-  function dropPiece() {
-    draggingPiece = null;
-  }
-
-  // Utility functions
-  function getMousePos(canvas, event) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top
-    };
-  }
-
-  function isInside(mousePos, piece) {
-    return mousePos.x > piece.x && mousePos.x < piece.x + pieceWidth &&
-           mousePos.y > piece.y && mousePos.y < piece.y + pieceHeight;
-  }
-};
+  canvas.addEvent
