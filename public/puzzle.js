@@ -48,7 +48,7 @@ window.onload = function() {
 
   }
   
-  function redrawPuzzle() {
+ /* function redrawPuzzle() {
 	ctx.save();
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
@@ -58,7 +58,7 @@ window.onload = function() {
 	
 	context.restore();
 	
-  }
+  }*/
   //function movePuzzlePieces() {
 	//  pieces.forEach(piece => {
   //    ctx.translate(piece.x, piece.y);
@@ -76,7 +76,7 @@ window.onload = function() {
     // Logging the new order of the pieces for debugging
     console.log("Pieces after shuffle:", pieces);
 
-    redrawPuzzle();
+    drawPuzzle();
   }
 
   // Add event listener for the shuffle button
