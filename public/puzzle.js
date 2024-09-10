@@ -9,7 +9,7 @@ window.onload = function() {
 
   // Load the Checkpoint logo
   const img = new Image();
-  img.src = './images/CP-blog-banner.png'; // Update with the new image path
+  img.src = './images/CP-blog-banner.png'; // Path to the image
   img.onload = function() {
     // Set canvas size to match the image size dynamically
     canvas.width = img.width;
@@ -39,44 +39,29 @@ window.onload = function() {
     }
   }
 
+  // Function to shuffle the puzzle pieces randomly
+  function shufflePieces() {
+    console.log("Shuffling pieces...");
+
+    // First, shuffle the pieces array
+    const shuffledPieces = [...pieces].sort(() => Math.random() - 0.5);
+
+    // Now, reassign the image position (imgX and imgY) of each piece based on the shuffled array
+    pieces.forEach((piece, index) => {
+      piece.imgX = shuffledPieces[index].imgX;
+      piece.imgY = shuffledPieces[index].imgY;
+    });
+
+    // Redraw the puzzle with the new shuffled pieces
+    drawPuzzle();
+  }
+
   // Draw the puzzle pieces on the canvas
   function drawPuzzle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
     pieces.forEach(piece => {
       ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
     });
-
-  }
-  
- /* function redrawPuzzle() {
-	ctx.save();
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
-    pieces.forEach(piece => {
-      ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
-    });
-	
-	context.restore();
-	
-  }*/
-  //function movePuzzlePieces() {
-	//  pieces.forEach(piece => {
-  //    ctx.translate(piece.x, piece.y);
-  //  });
-	
-  }
-  // Function to shuffle the puzzle pieces randomly
-  function shufflePieces() {
-    // Logging to check if the shuffle button works
-    console.log("Shuffling pieces...");
-
-    // Shuffle the pieces array
-    pieces.sort(() => Math.random() - 0.5);
-    
-    // Logging the new order of the pieces for debugging
-    console.log("Pieces after shuffle:", pieces);
-
-    drawPuzzle();
   }
 
   // Add event listener for the shuffle button
