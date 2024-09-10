@@ -60,7 +60,13 @@ window.onload = function() {
   function drawPuzzle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
     pieces.forEach(piece => {
+      // Draw the image piece
       ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
+
+      // Draw a black outline around the piece
+      ctx.strokeStyle = 'black';   // Set stroke color to black
+      ctx.lineWidth = 2;           // Set the width of the outline
+      ctx.strokeRect(piece.x, piece.y, pieceWidth, pieceHeight); // Draw the outline
     });
   }
 
