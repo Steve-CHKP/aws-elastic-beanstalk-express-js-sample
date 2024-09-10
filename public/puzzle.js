@@ -46,13 +46,15 @@ window.onload = function() {
     // First, shuffle the pieces array
     const shuffledPieces = [...pieces].sort(() => Math.random() - 0.5);
 
-    // Now, reassign the image position (imgX and imgY) of each piece based on the shuffled array
+    // Now, reassign both the canvas position and the image section to avoid duplication
     pieces.forEach((piece, index) => {
+      piece.x = shuffledPieces[index].x;
+      piece.y = shuffledPieces[index].y;
       piece.imgX = shuffledPieces[index].imgX;
       piece.imgY = shuffledPieces[index].imgY;
     });
 
-    // Redraw the puzzle with the new shuffled pieces
+    // Redraw the puzzle with the shuffled pieces
     drawPuzzle();
   }
 
