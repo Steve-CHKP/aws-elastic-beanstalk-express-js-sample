@@ -43,18 +43,32 @@ window.onload = function() {
   function shufflePieces() {
     console.log("Shuffling pieces...");
 
-    // First, shuffle the pieces array
-    const shuffledPieces = [...pieces].sort(() => Math.random() - 0.5);
+    // Create an array of all possible image sections (unique imgX and imgY combinations)
+    const imageSections = pieces.map(piece => ({
+      imgX: piece.imgX,
+      imgY: piece.imgY
+    }));
 
-    // Now, reassign both the canvas position and the image section to avoid duplication
+    // Shuffle the image sections array
+    const shuffledSections = [...imageSections].sort(() => Math.random() - 0.5);
+
+    // Now assign each piece a unique shuffled image section
     pieces.forEach((piece, index) => {
-      piece.x = shuffledPieces[index].x;
-      piece.y = shuffledPieces[index].y;
-      piece.imgX = shuffledPieces[index].imgX;
-      piece.imgY = shuffledPieces[index].imgY;
+      const shuffledSection = shuffledSections[index];
+      piece.imgX = shuffledSection.imgX;
+      piece.imgY = shuffledSection.imgY;
     });
 
-    // Redraw the puzzle with the shuffled pieces
+    // Shuffle the positions (x, y) of the pieces separately
+    const shuffledPositions = [...pieces].sort(() => Math.random() - 0.5);
+
+    // Assign the shuffled positions
+    pieces.forEach((piece, index) => {
+      piece.x = shuffledPositions[index].x;
+      piece.y = shuffledPositions[index].y;
+    });
+
+    // Redraw the puzzle with the new shuffled pieces
     drawPuzzle();
   }
 
