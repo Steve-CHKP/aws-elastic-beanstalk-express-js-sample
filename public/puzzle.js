@@ -52,20 +52,32 @@ window.onload = function() {
     // Shuffle the image sections array
     const shuffledSections = [...imageSections].sort(() => Math.random() - 0.5);
 
-    // Now assign each piece a unique shuffled image section
+    // Assign each piece a unique shuffled image section
     pieces.forEach((piece, index) => {
       const shuffledSection = shuffledSections[index];
       piece.imgX = shuffledSection.imgX;
       piece.imgY = shuffledSection.imgY;
     });
 
-    // Shuffle the positions (x, y) of the pieces separately
-    const shuffledPositions = [...pieces].sort(() => Math.random() - 0.5);
+    // Generate all possible positions based on the grid size (e.g., 3x3)
+    const positions = [];
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        positions.push({
+          x: col * pieceWidth,
+          y: row * pieceHeight
+        });
+      }
+    }
 
-    // Assign the shuffled positions
+    // Shuffle the positions array
+    const shuffledPositions = positions.sort(() => Math.random() - 0.5);
+
+    // Assign each piece a unique position from the shuffled positions
     pieces.forEach((piece, index) => {
-      piece.x = shuffledPositions[index].x;
-      piece.y = shuffledPositions[index].y;
+      const shuffledPosition = shuffledPositions[index];
+      piece.x = shuffledPosition.x;
+      piece.y = shuffledPosition.y;
     });
 
     // Redraw the puzzle with the new shuffled pieces
