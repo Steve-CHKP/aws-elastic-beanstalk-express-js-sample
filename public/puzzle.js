@@ -11,26 +11,31 @@ window.onload = function() {
   const img = new Image();
   img.src = './images/CP-blog-banner.png'; // Path to the image
   img.onload = function() {
-    // Set canvas size to match the image size dynamically
-    canvas.width = img.width;
-    canvas.height = img.height;
+    // Set canvas size (2x width, 4x height of the image)
+    canvas.width = img.width * 2;
+    canvas.height = img.height * 4;
 
-    pieceWidth = canvas.width / 3;  // Assuming a 3x3 grid puzzle
-    pieceHeight = canvas.height / 3;
+    // Puzzle piece dimensions (original image dimensions)
+    pieceWidth = img.width / 3;
+    pieceHeight = img.height / 3;
 
-    // Initialize pieces
-    initializePieces();
-    drawPuzzle();
+    // Calculate the center position for the puzzle
+    const centerX = (canvas.width - img.width) / 2;
+    const centerY = (canvas.height - img.height) / 2;
+
+    // Initialize pieces in the centered area
+    initializePieces(centerX, centerY);
+    drawPuzzle(centerX, centerY);
   };
 
-  // Function to initialize pieces in the correct order
-  function initializePieces() {
+  // Function to initialize pieces in the correct order, in the centered area
+  function initializePieces(centerX, centerY) {
     pieces = [];
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
         const piece = {
-          x: col * pieceWidth,
-          y: row * pieceHeight,
+          x: centerX + col * pieceWidth,
+          y: centerY + row * pieceHeight,
           imgX: col * pieceWidth,
           imgY: row * pieceHeight
         };
@@ -64,8 +69,8 @@ window.onload = function() {
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
         positions.push({
-          x: col * pieceWidth,
-          y: row * pieceHeight
+          x: pieces[col + row * 3].x, // Keep centered positions
+          y: pieces[col + row * 3].y
         });
       }
     }
@@ -85,8 +90,14 @@ window.onload = function() {
   }
 
   // Draw the puzzle pieces on the canvas
-  function drawPuzzle() {
+  function drawPuzzle(centerX, centerY) {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
+
+    // Draw a black outline around the centered puzzle area
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(centerX, centerY, img.width, img.height);
+
     pieces.forEach(piece => {
       // Draw the image piece
       ctx.drawImage(img, piece.imgX, piece.imgY, pieceWidth, pieceHeight, piece.x, piece.y, pieceWidth, pieceHeight);
